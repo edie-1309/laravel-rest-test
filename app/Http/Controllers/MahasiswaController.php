@@ -15,7 +15,12 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        $data = Mahasiswa::all();
+        if(request('search'))
+        {
+            $data = Mahasiswa::filter(request('search'))->get();
+        }else{
+            $data = Mahasiswa::all();
+        }
         
         return MahasiswaResource::collection($data);
     }
