@@ -17,9 +17,9 @@ class MahasiswaController extends Controller
     {
         if(request('search'))
         {
-            $data = Mahasiswa::filter(request('search'))->get();
+            $data = Mahasiswa::filter(request('search'))->paginate(5);
         }else{
-            $data = Mahasiswa::all();
+            $data = Mahasiswa::paginate(5);
         }
         
         return MahasiswaResource::collection($data);

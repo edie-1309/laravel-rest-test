@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MahasiswaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,4 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('/mahasiswa', MahasiswaController::class);
+Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('login');
+Route::get('/logout', [LoginController::class, 'logout'])->middleware(['auth:sanctum']);
+
+Route::resource('/mahasiswa', MahasiswaController::class)->middleware(['auth:sanctum']);
