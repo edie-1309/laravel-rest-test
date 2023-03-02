@@ -17,7 +17,7 @@ class JurusanResource extends JsonResource
         return [
             'id' => $this->id,
             'jurusan' => $this->jurusan,
-            'fakultas' => $this->fakultas,
+            'fakultas' => $this->whenLoaded('fakultas'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

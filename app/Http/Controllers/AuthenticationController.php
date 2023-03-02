@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class LoginController extends Controller
+class AuthenticationController extends Controller
 {
     public function authenticate(Request $request)
     {
@@ -41,5 +40,10 @@ class LoginController extends Controller
         return response()->json([
             'message' => 'You have been logout!'
         ]);
+    }
+
+    public function me()
+    {
+        return response()->json(auth()->user());
     }
 }

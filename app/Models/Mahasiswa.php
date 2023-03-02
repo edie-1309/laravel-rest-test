@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Mahasiswa extends Model
@@ -13,6 +14,8 @@ class Mahasiswa extends Model
     protected $guarded = ['id'];
 
     protected $table = 'mahasiswa';
+
+    protected $with = ['jurusan'];
 
     public function scopeFilter(Builder $query, $keyword): void
     {

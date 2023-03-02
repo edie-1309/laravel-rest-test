@@ -21,7 +21,7 @@ class MahasiswaResource extends JsonResource
             'nim' => $this->nim,
             'kelas' => $this->kelas,
             'alamat' => $this->alamat,
-            'jurusan' => new JurusanResource($this->jurusan),
+            'jurusan' => new JurusanResource($this->whenLoaded('jurusan')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

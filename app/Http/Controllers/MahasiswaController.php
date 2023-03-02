@@ -19,7 +19,7 @@ class MahasiswaController extends Controller
         {
             $data = Mahasiswa::filter(request('search'))->paginate(5);
         }else{
-            $data = Mahasiswa::paginate(5);
+            $data = Mahasiswa::all();
         }
         
         return MahasiswaResource::collection($data);
@@ -38,7 +38,17 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'nim' => 'required',
+            'kelas' => 'required',
+            'alamat' => 'required',
+            'jurusan_id' => 'required'
+        ]);
+
+        $mahasiswa = Mahasiswa::create($validatedData);
+
+        return new MahasiswaDetailResource($mahasiswa);
     }
 
     /**
