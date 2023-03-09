@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MahasiswaCollection;
 use App\Http\Resources\MahasiswaDetailResource;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
@@ -17,9 +18,9 @@ class MahasiswaController extends Controller
     {
         if(request('search'))
         {
-            $data = Mahasiswa::filter(request('search'))->paginate(5);
+            $data = Mahasiswa::filter(request('search'))->with('jurusan.fakultas')->paginate(5);
         }else{
-            $data = Mahasiswa::all();
+            $data = Mahasiswa::with('jurusan.fakultas')->paginate(5);
         }
         
         return MahasiswaResource::collection($data);
@@ -43,12 +44,12 @@ class MahasiswaController extends Controller
             'nim' => 'required',
             'kelas' => 'required',
             'alamat' => 'required',
-            'jurusan_id' => 'required'
+            'jurusan_id' => 'required|exists:jurusan,id'
         ]);
 
         $mahasiswa = Mahasiswa::create($validatedData);
 
-        return new MahasiswaDetailResource($mahasiswa);
+        return new MahasiswaDetailResource($mahasiswa->loadMissing('jurusan'));
     }
 
     /**
@@ -56,7 +57,7 @@ class MahasiswaController extends Controller
      */
     public function show(Mahasiswa $mahasiswa)
     {
-        return new MahasiswaDetailResource($mahasiswa);
+        return new MahasiswaDetailResource($mahasiswa->load('jurusan.fakultas'));
     }
 
     /**

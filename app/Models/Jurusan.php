@@ -13,8 +13,6 @@ class Jurusan extends Model
 
     protected $table = 'jurusan';
 
-    protected $with = ['fakultas'];
-
     public function mahasiswa()
     {
         return $this->hasMany(Mahasiswa::class);

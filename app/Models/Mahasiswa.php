@@ -15,8 +15,6 @@ class Mahasiswa extends Model
 
     protected $table = 'mahasiswa';
 
-    protected $with = ['jurusan'];
-
     public function scopeFilter(Builder $query, $keyword): void
     {
         $query->where('nama', 'like', '%' . $keyword . '%')
